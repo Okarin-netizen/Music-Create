@@ -98,7 +98,7 @@ button, input, select { font: inherit; color: inherit; }
 .sym { font-size: 22px; font-family: "Noto Music", "Segoe UI Symbol", serif; min-width: 48px; }
 #paper { flex: 1; overflow: auto; padding-block: 16px; padding-inline: 16px; }
 #sheet { background: var(--paper); border-radius: 6px; box-shadow: 0 1px 2px rgb(0 0 0 / .08), 0 6px 24px rgb(0 0 0 / .06);
-  max-width: 1400px; margin: 0 auto; padding-block: 12px; }
+  max-width: 1400px; margin: 0 auto; padding-block: 12px; position: relative; }
 #score { display: block; width: 100%; touch-action: pan-y; /* none while a note is selected, see syncTools */ cursor: crosshair; }
 .hint { text-align: center; color: var(--muted); font-size: 13px; padding-block: 6px 0; margin: 0; }
 .player { border-top: 1px solid var(--line); border-bottom: 0; }
@@ -133,14 +133,13 @@ button, input, select { font: inherit; color: inherit; }
 .rb ruby { ruby-position: over; }
 .rb rt { font-size: .52em; font-weight: 400; }
 .btn, .tab { line-height: 1.15; }
-#sheet { position: relative; }
 #grab { position: absolute; touch-action: none; z-index: 2; cursor: crosshair; }
 .modal .tplbtn { height: auto; min-height: 56px; width: 100%; display: grid; gap: 2px; justify-content: start; justify-items: start; text-align: left; padding: 8px 14px; }
 .tplbtn b { font-size: 17px; }
 .tplbtn span { font-size: 13px; color: var(--muted); font-weight: 400; }
-.sset { display: grid; gap: 4px; }
-.sset h3 { margin: 6px 0 0; font-size: 13px; color: var(--muted); letter-spacing: .04em; }
-.srow select { height: 44px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); padding: 0 8px; }
+.sset { display: grid; gap: 2px; }
+.sset h3 { margin: 2px 0 0; font-size: 13px; color: var(--muted); letter-spacing: .04em; }
+.srow select { height: 36px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); padding: 0 8px; }
 .smodes { display: flex; gap: 8px; flex-wrap: wrap; }
 .smodes .btn { flex: 1; min-width: 6em; }
 .setmode[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
@@ -172,9 +171,6 @@ button, input, select { font: inherit; color: inherit; }
 .zv { min-width: 8em; text-align: center; }
 .srow { display: flex; align-items: center; gap: 10px; min-height: 40px; flex-wrap: wrap; }
 .srow.sub { padding-left: 4px; min-height: 36px; }
-.srow select { height: 36px; }
-.sset { gap: 2px; }
-.sset h3 { margin: 2px 0 0; }
 input[type="range"] { -webkit-appearance: none; appearance: none; background: transparent; }
 input[type="range"]::-webkit-slider-runnable-track { height: 10px; border-radius: 5px; background: var(--line); }
 input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 30px; height: 30px; margin-top: -10px; border-radius: 50%; background: var(--accent); border: 3px solid var(--paper); box-shadow: 0 1px 4px rgb(0 0 0 / .35); }
@@ -351,10 +347,10 @@ input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; border-radius
         <label for="inst">音色</label><select id="inst"><option value="piano">ピアノ</option><option value="organ">オルガン</option><option value="xylo">もっきん</option><option value="guitar">ギター</option><option value="koto">こと（箏）</option><option value="shaku">しゃくはち（尺八）</option></select></div>
     </section>
     <section class="sset"><h3>音（名前をタップで、鳴らす・消す）</h3>
-      <div class="vrow "><label class="tog"><input type="checkbox" id="b-mel-on"><span class="tn">メロディ</span><span class="ts"></span></label><span class="lim vol notr">小</span><input type="range" class="vol" id="b-mel-vol" min="0" max="150" aria-label="メロディの音量"><span class="lim vol notr">大</span></div>
-      <div class="vrow "><label class="tog"><input type="checkbox" id="b-ch-on"><span class="tn">コード伴奏</span><span class="ts"></span></label><select class="fullonly" id="b-ch-inst" aria-label="楽器"><option value="piano">ピアノ</option><option value="guitar">ギター</option><option value="organ">オルガン</option></select><select class="fullonly" id="b-ch-pat" aria-label="弾き方"><option value="block">ジャーン</option><option value="arp">アルペジオ</option><option value="strum">ストローク</option></select><span class="lim vol notr">小</span><input type="range" class="vol" id="b-ch-vol" min="0" max="150" aria-label="コード伴奏の音量"><span class="lim vol notr">大</span></div>
+      <div class="vrow"><label class="tog"><input type="checkbox" id="b-mel-on"><span class="tn">メロディ</span><span class="ts"></span></label><span class="lim vol notr">小</span><input type="range" class="vol" id="b-mel-vol" min="0" max="150" aria-label="メロディの音量"><span class="lim vol notr">大</span></div>
+      <div class="vrow"><label class="tog"><input type="checkbox" id="b-ch-on"><span class="tn">コード伴奏</span><span class="ts"></span></label><select class="fullonly" id="b-ch-inst" aria-label="楽器"><option value="piano">ピアノ</option><option value="guitar">ギター</option><option value="organ">オルガン</option></select><select class="fullonly" id="b-ch-pat" aria-label="弾き方"><option value="block">ジャーン</option><option value="arp">アルペジオ</option><option value="strum">ストローク</option></select><span class="lim vol notr">小</span><input type="range" class="vol" id="b-ch-vol" min="0" max="150" aria-label="コード伴奏の音量"><span class="lim vol notr">大</span></div>
       <div class="vrow fullonly"><label class="tog"><input type="checkbox" id="b-bs-on"><span class="tn">ベース</span><span class="ts"></span></label><span class="lim vol notr">小</span><input type="range" class="vol" id="b-bs-vol" min="0" max="150" aria-label="ベースの音量"><span class="lim vol notr">大</span></div>
-      <div class="vrow "><label class="tog"><input type="checkbox" id="b-dr-on"><span class="tn">ドラム</span><span class="ts"></span></label><span class="lim vol notr">小</span><input type="range" class="vol" id="b-dr-vol" min="0" max="150" aria-label="ドラムの音量"><span class="lim vol notr">大</span></div>
+      <div class="vrow"><label class="tog"><input type="checkbox" id="b-dr-on"><span class="tn">ドラム</span><span class="ts"></span></label><span class="lim vol notr">小</span><input type="range" class="vol" id="b-dr-vol" min="0" max="150" aria-label="ドラムの音量"><span class="lim vol notr">大</span></div>
       <div class="vrow mid"><label class="tog"><input type="checkbox" id="b-sing-on"><span class="tn">歌声</span><span class="ts"></span></label><select class="fullonly" id="b-sing-voice" aria-label="声"><option value="female">女性</option><option value="male">男性（低く）</option><option value="child">子ども</option></select><span class="lim vol notr">小</span><input type="range" class="vol" id="b-sing-vol" min="0" max="150" aria-label="歌声の音量"><span class="lim vol notr">大</span></div>
     </section>
     <section class="sset">
@@ -1273,7 +1269,7 @@ function drawNote(ctx, n, x, sys, g, sign = 0, bm = null) {
   steps.forEach((st, i) => {
     let off = 0;
     if (!whole) {
-      if (up && i > 0 && st - steps[i - 1] === 1 && !(steps[i - 1] !== lo && steps[i - 1] - steps[i - 2] === 1 && false)) off = dx;
+      if (up && i > 0 && st - steps[i - 1] === 1) off = dx;
       if (!up && i < steps.length - 1 && steps[i + 1] - st === 1) off = -dx;
     }
     drawHead(ctx, x + off, yOf(sys, st, g), g, filled, whole);
@@ -1435,9 +1431,8 @@ function drawScore(ctx, L, opt) {
     const k = +key;
     for (const [flag, label] of [["v1", "1."], ["v2", "2."]]) {
       if (!song.marks[key][flag]) continue;
-      let j = k, found = false;
-      for (let q = k; q < nm; q++) { const mm = song.marks[q] || {}; if (mm.re || mm.dc || mm.ds || mm.fine || mm.tc) { j = q; found = true; break; } }
-      if (!found) j = k;
+      let j = k;
+      for (let q = k; q < nm; q++) { const mm = song.marks[q] || {}; if (mm.re || mm.dc || mm.ds || mm.fine || mm.tc) { j = q; break; } }
       for (let q = k; q <= j; q++) volta[q] = { label, first: q === k, last: q === j };
     }
   }
@@ -1446,9 +1441,7 @@ function drawScore(ctx, L, opt) {
   ctx.lineCap = "butt";
   L.systems.forEach((sys, si) => {
     if (opt.only && !opt.only.includes(si)) return;
-    ctx.strokeStyle = C.ink; ctx.fillStyle = C.ink;
     const views = sys.v, V0 = views[0], VL = views[views.length - 1], span = VL.yb - V0.y0;
-    ctx.strokeStyle = C.ink; ctx.fillStyle = C.ink;
     views.forEach((v, vi) => {
       if (L.grand && opt.activePart === vi) { ctx.save(); ctx.fillStyle = C.soft; ctx.globalAlpha = 0.45; ctx.fillRect(sys.x0, v.y0 - 1.3 * g, sys.x1 - sys.x0, 6.6 * g); ctx.restore(); }
       ctx.strokeStyle = C.ink; ctx.fillStyle = C.ink;
@@ -1458,7 +1451,6 @@ function drawScore(ctx, L, opt) {
       ctx.stroke();
       if (v.clef === "bass") drawBassClef(ctx, sys.x0 + 1.0 * g, v.y0, g);
       else drawClef(ctx, sys.x0 + 1.5 * g, v.y0 + 3 * g, g);
-      ctx.fillStyle = C.ink; ctx.strokeStyle = C.ink;
       drawKeySig(ctx, v, g);
       if (sys.first) {
         ctx.font = `700 ${2.2 * g}px Georgia, "Times New Roman", serif`;
@@ -1800,6 +1792,7 @@ $("t-desel").onclick = () => { state.sel = -1; syncTools(); render(); };
 const KEEP_ON_UNDO = ["tempo", "inst", "band", "title", "composer", "lytext"]; // settings are not undo steps
 function undo() {
   if (!undoStack.length) return;
+  stopPlay(); // the playback was scheduled from the song being replaced
   const raw = undoStack.pop(), old = JSON.parse(raw.slice(1));
   if (raw[0] !== "W") KEEP_ON_UNDO.forEach(k => { if (k in song && !(k === "tempo" && old.tword !== song.tword)) old[k] = song[k]; });
   song = adopt(old); if (!song.grand) state.part = 0; state.sel = Math.min(state.sel, song.notes.length - 1); changed(); }
@@ -1838,7 +1831,7 @@ function needNote() { toast("先に音符を置くか、記号をつけたい音
 function setProp(prop, val) {
   const i = tgtIdx(); if (i < 0) return needNote();
   const n = song.notes[i];
-  if (n.rest && (val === "stac" || val === "acc" || prop === "dyn" && false)) { toast("休符にはつけられません"); return; }
+  if (n.rest && (val === "stac" || val === "acc")) { toast("休符にはつけられません"); return; }
   snapshot();
   if (n[prop] === val) delete n[prop]; else n[prop] = val;
   changed();
@@ -1998,7 +1991,7 @@ $("ly-clear").onclick = () => { snapshot(); song.notes.forEach(n => { delete n.l
 $("ly-one").addEventListener("change", e => {
   const i = tgtIdx(); if (i < 0) return needNote();
   const { moras } = parseMoras(e.target.value), n = song.notes[i];
-  snapshot(); if (moras.length) n.ly = moras[0] + ((moras[1] && SMALL_V[moras[1]]) ? "" : ""); else delete n.ly;
+  snapshot(); if (moras.length) n.ly = moras[0]; else delete n.ly;
   changed();
 });
 function setSing(on) {
@@ -2044,6 +2037,7 @@ const nearAppend = h => h.sys === L.appends[h.part].sys && h.x >= L.appends[h.pa
 function onDown(ev) {
   const h = hit(ev); if (!h) return;
   press = { h, id: ev.pointerId, x0: ev.clientX, y0: ev.clientY, moved: false, vert: false };
+  try { ev.target.setPointerCapture(ev.pointerId); } catch (e) { /* pointer already gone */ } // so a mouse released outside still ends the press
   if (state.stack) { /* no drag ghost while stacking notes */ }
   else if (isSelItem(h.item)) { /* a still tap keeps the pitch; the ghost appears once the finger moves */ }
   else if (!h.item && state.sel < 0 && nearAppend(h)) state.ghost = { sys: L.appends[h.part].sys, part: h.part, step: h.step, sel: -1 };
@@ -2121,7 +2115,7 @@ function scrollToEnd() {
 document.addEventListener("keydown", ev => {
   if (ev.target.matches("input, select")) return;
   if (document.querySelector(".modal:not([hidden])")) return; // no shortcuts behind an open dialog
-  if ((ev.ctrlKey || ev.metaKey) && ev.key === "z") { ev.preventDefault(); undo(); return; }
+  if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "z") { ev.preventDefault(); undo(); return; }
   if (ev.key === " ") { ev.preventDefault(); togglePlay(); return; }
   if (ev.key === "Delete" || ev.key === "Backspace") { ev.preventDefault(); del(); return; }
   if (ev.key === "Escape") { state.sel = -1; syncTools(); render(); return; }
@@ -2134,12 +2128,12 @@ document.addEventListener("keydown", ev => {
     const n = selNote(); if (n && !n.rest) preview(n); syncTools(); render(); return;
   }
   const map = { "1": "1", "2": "2", "3": "4", "4": "8", "5": "16" };
-  if (map[ev.key]) editSel(n => { n.d = map[ev.key]; });
+  if (map[ev.key] && !(mode === "easy" && map[ev.key] === "16")) editSel(n => { n.d = map[ev.key]; }); // かんたん has no 16th notes
 });
 
 // ---------- sound ----------
 let AC = null;
-function ac() { if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === "suspended") AC.resume(); return AC; }
+function ac() { if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === "suspended") AC.resume().catch(() => {}); return AC; }
 function voice(a, out, t, f, d, inst, vol = VOL.mf) {
   const vg = a.createGain(); vg.gain.value = vol; vg.connect(out);
   const g = a.createGain(); g.connect(vg);
@@ -2229,6 +2223,7 @@ function moraSound(m) {
 }
 const VOWEL_F = { a: [800, 1200, 2800], i: [300, 2300, 3000], u: [350, 1300, 2600], e: [500, 1900, 2700], o: [500, 900, 2600], N: [260, 1000, 2300] };
 const VOICE_SCALE = { female: 1.17, male: 1, child: 1.35 };
+const VOWEL_GAIN = { a: 1.07, i: 1, u: 0.98, e: 0.9, o: 0.72 }; // evens out the loudness of the vowels
 const CONS = { k: [0.035, "bp", 1800, 0.5], t: [0.035, "hp", 4000, 0.4], p: [0.03, "bp", 700, 0.45], s: [0.08, "hp", 5500, 0.35], h: [0.07, "bp", 1500, 0.25],
   g: [0.03, "bp", 1500, 0.12], d: [0.03, "hp", 3500, 0.1], b: [0.03, "bp", 600, 0.12], z: [0.05, "hp", 5000, 0.12], n: [0.05], m: [0.05], r: [0.03], y: [0.06], w: [0.06] };
 const VOICED_C = ["g", "d", "b", "z", "n", "m", "r", "y", "w"];
@@ -2247,8 +2242,7 @@ function sing(a, out, t, f, d, snd, voiceName, vol) {
   else { env.gain.setValueAtTime(0.0001, Math.max(t, vt - 0.01)); env.gain.exponentialRampToValueAtTime(1, vt + 0.035); }
   const rel = Math.max(vt + 0.06, t + dur - 0.04);
   env.gain.setValueAtTime(1, rel); env.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.07);
-  const VCORR = { a: 1.07, i: 1, u: 0.98, e: 0.9, o: 0.72 };
-  const mix = a.createGain(); mix.gain.value = vol * 0.36 * (snd.v ? VCORR[snd.v] : 0.7); mix.connect(out);
+  const mix = a.createGain(); mix.gain.value = vol * 0.36 * (snd.v ? VOWEL_GAIN[snd.v] : 0.7); mix.connect(out);
   const startF = c === "y" ? VOWEL_F.i : c === "w" ? VOWEL_F.u : null;
   [[1.0, 7], [0.75, 10], [0.4, 12]].forEach(([gain, q], k) => {
     const bp = a.createBiquadFilter(); bp.type = "bandpass"; bp.Q.value = q;
@@ -2503,7 +2497,8 @@ function togglePlay() {
 function replay() {
   if (!state.playing) return;
   const fp = state.playIdx.findIndex(v => v >= 0);
-  const sb = fp >= 0 ? withPart(fp, () => starts().list[state.playIdx[fp]]) : state.playing.sb;
+  const cur = fp >= 0 ? withPart(fp, () => starts().list[state.playIdx[fp]]) : undefined; // undefined once that note was removed
+  const sb = cur !== undefined ? cur : state.playing.sb;
   stopPlay(); playFrom(sb);
 }
 function playFrom(sb) {
@@ -2511,10 +2506,11 @@ function playFrom(sb) {
   const a = ac(); const out = a.createGain(); out.gain.value = 0.6; limiter(a, out);
   const t0 = a.currentTime + 0.08;
   const sch = schedule(a, out, sb, t0);
-  state.playing = { out, sch, sb };
+  const playing = { out, sch, sb };
+  state.playing = playing;
   setLabel($("play"), "■ 停止"); $("play").classList.add("playing");
   const tick = () => {
-    if (!state.playing) return;
+    if (state.playing !== playing) return; // stopped, or replaced by replay()
     const now = a.currentTime;
     if (now > sch.end + 0.3) return stopPlay();
     const idxs = [0, 1].map(p => { const c = sch.times.find(e => e.part === p && now >= e.t && now < e.t + e.d); return c ? c.i : -1; });
@@ -2564,7 +2560,7 @@ $("btn-save").onclick = () => download(new Blob([JSON.stringify(song, null, 1)],
 $("btn-open").onclick = () => $("file").click();
 $("file").onchange = async e => {
   const f = e.target.files[0]; e.target.value = ""; if (!f) return;
-  try { const s = validate(JSON.parse(await f.text())); if (!s) throw 0; snapshot(true); song = s; state.sel = -1; state.part = 0; state.g = 0; changed(); toast(`「${f.name}」を開きました`); }
+  try { const s = validate(JSON.parse(await f.text())); if (!s) throw new Error("invalid song file"); stopPlay(); snapshot(true); song = s; state.sel = -1; state.part = 0; state.g = 0; changed(); toast(`「${f.name}」を開きました`); }
   catch (err) { toast("このファイルは開けませんでした。おんぷ工房で保存した .json ファイルを選んでください"); }
 };
 // the start chooser: at launch it replaces "continue where you left off" (shared school Chromebooks); "新規" reuses it
@@ -2591,9 +2587,12 @@ document.querySelectorAll(".tplbtn").forEach(b => { b.onclick = () => {
 }; });
 
 // MP3
+let exporting = false; // one MP3 / PDF export at a time (a second tap would start a parallel one)
 $("btn-mp3").onclick = async () => {
+  if (exporting) return;
   if (!hasNotes()) { toast("音符がありません"); return; }
   if (typeof lamejs === "undefined") { toast("MP3変換の部品が読みこめませんでした"); return; }
+  exporting = true;
   toast("MP3に変換しています…", 60000);
   await new Promise(r => setTimeout(r, 30));
   try {
@@ -2612,11 +2611,14 @@ $("btn-mp3").onclick = async () => {
     const fin = enc.flush(); if (fin.length) parts.push(new Uint8Array(fin));
     download(new Blob(parts, { type: "audio/mpeg" }), fileName("mp3"));
   } catch (err) { console.error(err); toast("MP3を作れませんでした"); }
+  finally { exporting = false; }
 };
 
 // PDF (A4, one JPEG image per page)
 $("btn-pdf").onclick = async () => {
+  if (exporting) return;
   if (!hasNotes()) { toast("音符がありません"); return; }
+  exporting = true;
   toast("PDFを作っています…", 60000);
   await new Promise(r => setTimeout(r, 30));
   try {
@@ -2645,7 +2647,6 @@ $("btn-pdf").onclick = async () => {
         c.fillText(song.title || hira("無題"), PW / 2, 120);
         c.font = `400 26px ${font}`; c.textAlign = "right";
         if (song.composer) c.fillText(hira("作曲：") + song.composer, PW - mx, 180);
-
       }
       c.save(); c.translate(mx, shift);
       drawScore(c, LL, { colors: C, sel: -1, part: 0, playIdx: null, names: state.names, noch: mode === "easy", trailing: false, only: pagesSys[p], font });
@@ -2657,6 +2658,7 @@ $("btn-pdf").onclick = async () => {
     }
     download(new Blob([makePdf(out, PW, PH)], { type: "application/pdf" }), fileName("pdf"));
   } catch (err) { console.error(err); toast("PDFを作れませんでした"); }
+  finally { exporting = false; }
 };
 function makePdf(jpgs, iw, ih) {
   const W = 595.28, H = 841.89, te = new TextEncoder();
@@ -3030,9 +3032,10 @@ function limitKeys() {
   const cur = String(song.key) + (song.minor ? "m" : "");
   document.querySelectorAll("#key option").forEach(o => { const off = mode === "normal" && o.value !== "0" && o.value !== "0m" && o.value !== cur; o.hidden = off; o.disabled = off; });
 }
-$("s-hira").addEventListener("input", () => { hiraManual = !hiraManual; try { localStorage.setItem("onpu-kobo-hira", hiraManual ? "1" : "0"); } catch (e) { /* storage unavailable */ } applyText();});
+$("s-hira").addEventListener("input", e => { hiraManual = e.target.checked; try { localStorage.setItem("onpu-kobo-hira", hiraManual ? "1" : "0"); } catch (err) { /* storage unavailable */ } applyText(); });
 document.querySelectorAll(".modebtn").forEach(b => { b.onclick = () => { $("mode-modal").hidden = true; setMode(b.dataset.mode); if (launching) openStart(true); }; });
-$("mode-modal").addEventListener("click", e => { if (e.target === $("mode-modal") && localStorage.getItem("onpu-kobo-mode")) $("mode-modal").hidden = true; });
+function savedModeOf() { try { return localStorage.getItem("onpu-kobo-mode"); } catch (e) { return null; } }
+$("mode-modal").addEventListener("click", e => { if (e.target === $("mode-modal") && savedModeOf()) $("mode-modal").hidden = true; });
 
 // ---------- 設定画面 ----------
 // one place for every setting: the controls here are the real ones (band volumes, tempo, meter, tone, names, zoom, mode)
@@ -3067,7 +3070,7 @@ if (document.fonts) document.fonts.ready.then(render);
 try { showTab(localStorage.getItem("onpu-kobo-tab") || "note"); } catch (e) { showTab("note"); }
 drawIcons();
 try { hiraManual = localStorage.getItem("onpu-kobo-hira") === "1"; } catch (e) { hiraManual = false; }
-let savedMode = null; try { savedMode = localStorage.getItem("onpu-kobo-mode"); } catch (e) { savedMode = null; }
+const savedMode = savedModeOf();
 if (["easy", "normal", "full"].includes(savedMode)) { setMode(savedMode); openStart(true); }
 else { setMode("full"); $("mode-modal").hidden = false; }
 </script>
