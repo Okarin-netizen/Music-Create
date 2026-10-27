@@ -238,6 +238,11 @@ input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; border-radius
   <div class="group mid" aria-label="和音">
     <button class="btn txt" id="t-stack" aria-pressed="false" title="選んだ音符に、ほかの高さの音を重ねます。オンにして、選んだ音符の列の五線をタップ">音を重ねる</button>
   </div>
+  <div class="group" role="group" aria-label="小節"><span class="group-label mid">小節</span>
+    <button class="btn txt" id="m-again" title="選んだ音符の小節（選んでいないときは最後の小節）を、曲の最後にもう一度つけたします">もういちど</button>
+    <button class="btn txt mid" id="m-copy" title="選んだ音符の小節をコピーします。となりの小節を選んで続けて押すと、コピーする小節が広がります">小節をコピー</button>
+    <button class="btn txt mid" id="m-paste" title="コピーした小節をはりつけます。音符を選んでいるときはその小節を置きかえ、選んでいないときは曲の最後につけたします">はりつけ</button>
+  </div>
 </nav>
 
 <nav class="bar tools2" id="p-sym" data-panel="sym" aria-label="音楽記号" hidden>
@@ -333,8 +338,12 @@ input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; border-radius
 <footer class="bar player">
   <button class="btn primary" id="play">▶ 再生</button>
   <div class="field"><label for="tempo">テンポ</label><input type="range" id="tempo" min="40" max="200" step="2"><span class="tnum" id="tempo-v"></span></div>
+  <button class="btn" id="t-loop" aria-pressed="false" title="くり返し再生。音符を選んでいるときはその小節から、選んでいないときは曲全体をくり返します">🔁 くり返し</button>
+  <div class="field mid" id="loop-nf" hidden><label for="loop-n">くり返す長さ</label>
+    <select id="loop-n"><option value="1">1小節</option><option value="2" selected>2小節</option><option value="4">4小節</option></select></div>
   <div class="spacer"></div>
   <button class="btn" id="t-undo" title="元に戻す (Ctrl+Z)">↶ 戻す</button>
+  <button class="btn" id="t-redo" title="戻したことを、やり直す (Ctrl+Y)">↷ やり直す</button>
 </footer>
 
 <div class="toast" id="toast" hidden></div>
@@ -345,6 +354,9 @@ input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; border-radius
       <div class="srow"><label for="s-tempo">テンポ</label><span class="lim">おそい</span><input type="range" id="s-tempo" min="40" max="200" step="2"><span class="lim">はやい</span><span class="tnum" id="s-tempo-v"></span></div>
       <div class="srow mid"><label for="beats">拍子</label><select id="beats"><option value="2">2/4</option><option value="3">3/4</option><option value="4">4/4</option></select>
         <label for="inst">音色</label><select id="inst"><option value="piano">ピアノ</option><option value="organ">オルガン</option><option value="xylo">もっきん</option><option value="guitar">ギター</option><option value="koto">こと（箏）</option><option value="shaku">しゃくはち（尺八）</option></select></div>
+      <div class="srow"><label for="s-scale">つかう音</label><select id="s-scale" title="えらんだ音階の音だけを置けます。五線をタップすると、いちばん近い音になります">
+        <option value="">すべての音</option><option value="yona">ドレミソラ（5つの音）</option><option value="minyo">民謡音階（ラドレミソ）</option>
+        <option value="miyako">都節音階（ミファラシド）</option><option value="ritsu">律音階（レミソラシ）</option><option value="ryukyu">沖縄音階（ドミファソシ）</option></select></div>
     </section>
     <section class="sset"><h3>音（名前をタップで、鳴らす・消す）</h3>
       <div class="vrow"><label class="tog"><input type="checkbox" id="b-mel-on"><span class="tn">メロディ</span><span class="ts"></span></label><span class="lim vol notr">小</span><input type="range" class="vol" id="b-mel-vol" min="0" max="150" aria-label="メロディの音量"><span class="lim vol notr">大</span></div>
@@ -373,6 +385,7 @@ input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; border-radius
     <section class="asec"><b>おんぷ工房</b><p>バージョン <span id="about-ver"></span>（<span id="about-date"></span>）<br>ブラウザだけで動く作曲アプリです。曲はこの端末にだけ保存されます。</p></section>
     <section class="asec"><b>更新履歴</b>
       <ul class="hist">
+        <li><b>1.13</b>（2026-10-27）「↷ やり直す」を足しました（Ctrl+Y）。「音符」タブに、小節を「もういちど」つけたすボタンと、「小節をコピー」「はりつけ」を足しました。下のバーの「🔁 くり返し」で、選んだ小節や曲全体をくり返し再生できます。設定の「つかう音」で、ドレミソラの5つの音や日本の音階（民謡・都節・律・沖縄）の音だけを置けるようにしました。</li>
         <li><b>1.12</b>（2026-10-13）タイで小節をまたいだ音が、♯・♭のつかない音で鳴りなおしていたのを直しました。装飾音とトリルが、同じ小節で前についた♯・♭に合うようにしました。音符を置くときに出る音の名前を、鳴る音とそろえました。ひらがな・ふりがなの読みのまちがい（「名前」「消えます」など）を直しました。MP3の音を大きくしました。</li>
         <li><b>1.11</b>（2026-10-11）音色に「こと（箏）」と「しゃくはち（尺八）」を足しました（ふつう・くわしく）。かんたんでお手本を開くと、強弱記号とフェルマータをはずします。</li>
         <li><b>1.10</b>（2026-10-11）学年に合わせて整えました。かんたんでは、16分音符・付点・♯♭♮のボタンとコード名を出さず、音の高さもせまくしました（「よろこびのうた」も選べません）。ふつうでは、調をハ長調とイ短調に絞りました。</li>
@@ -732,6 +745,8 @@ const MIN_STEP = -14, MAX_STEP = 14; // C2 .. C6 (step 0 = C4)
 const DYNS = ["pp", "p", "mp", "mf", "f", "ff"];
 const VOL = { pp: 0.3, p: 0.45, mp: 0.62, mf: 0.8, f: 1.0, ff: 1.25 };
 const ARTS = ["stac", "acc", "ferm", "tr"];
+// 「つかう音」: the staff letters (0 = ド … 6 = シ) a scale lets the children place
+const SCALES = { yona: [0, 1, 2, 4, 5], minyo: [0, 1, 2, 4, 5], miyako: [0, 2, 3, 5, 6], ritsu: [1, 2, 4, 5, 6], ryukyu: [0, 2, 3, 4, 6] };
 const TEMPO_WORDS = { Largo: 52, Adagio: 66, Andante: 80, Moderato: 100, Allegro: 126, Presto: 168 };
 const SHARP_L = [3, 0, 4, 1, 5, 2, 6], FLAT_L = [6, 2, 5, 1, 4, 0, 3];
 const SHARP_S = [10, 7, 11, 8, 5, 9, 6], FLAT_S = [6, 9, 5, 8, 4, 7, 3];
@@ -911,7 +926,7 @@ function templateSong(id) {
     "2 2 3 4  4 3 2 1  0 0 1 2  2. 1:8 1:2  2 2 3 4  4 3 2 1  0 0 1 2  1. 0:8 0:2");
   return blankSong();
 }
-function blankSong() { return adopt({ v: 2, title: "", composer: "", tempo: 100, beats: 4, inst: "piano", key: 0, minor: false, grand: false, parts: [{ clef: "treble", notes: [] }, { clef: "bass", notes: [] }], tword: "", beam: true, drums: { grid: drumPreset("8") }, marks: {}, band: defaultBand(), lytext: "" }); }
+function blankSong() { return adopt({ v: 2, title: "", composer: "", tempo: 100, beats: 4, inst: "piano", key: 0, minor: false, grand: false, parts: [{ clef: "treble", notes: [] }, { clef: "bass", notes: [] }], tword: "", beam: true, drums: { grid: drumPreset("8") }, marks: {}, band: defaultBand(), lytext: "", scale: "" }); }
 // song.notes / song.clef always mean the staff being edited (only non-enumerable, so saves hold both staves in parts)
 function adopt(s) {
   const ap = () => (s.grand ? state.part : 0);
@@ -943,6 +958,7 @@ function validate(o) {
   s.beats = [2, 3, 4].includes(+o.beats) ? +o.beats : 4;
   s.inst = ["piano", "organ", "xylo", "guitar", "koto", "shaku"].includes(o.inst) ? o.inst : "piano";
   s.lytext = String(o.lytext || "").slice(0, 500);
+  s.scale = SCALES[o.scale] ? o.scale : "";
   s.minor = !!o.minor; s.grand = !!o.grand; s.beam = o.beam !== false;
   s.tword = Object.keys(TEMPO_WORDS).includes(o.tword) ? o.tword : "";
   const dg = o.drums && o.drums.grid;
@@ -992,11 +1008,12 @@ function validate(o) {
 }
 
 let savedZoom = 0; try { savedZoom = +localStorage.getItem("onpu-kobo-zoom") || 0; } catch (e) { savedZoom = 0; }
-const state = { cur: { d: "4", dot: false, rest: false, a: 0 }, sel: -1, part: 0, names: true, g: 0, playing: null, ghost: null, playIdx: [-1, -1], stack: false };
+const state = { cur: { d: "4", dot: false, rest: false, a: 0 }, sel: -1, part: 0, names: true, g: 0, playing: null, ghost: null, playIdx: [-1, -1], stack: false, loop: false };
 try { if (localStorage.getItem("onpu-kobo-names") === "0") state.names = false; } catch (e) { /* storage unavailable */ }
-const undoStack = [];
+const undoStack = [], redoStack = [];
+let edits = 0; // counts edit steps, so 小節をコピー knows nothing changed since the last copy
 // whole = the step replaced the whole song (template, opened file): undoing it brings back that song's settings too
-function snapshot(whole) { undoStack.push((whole ? "W" : "N") + JSON.stringify(song)); if (undoStack.length > 120) undoStack.shift(); }
+function snapshot(whole) { undoStack.push((whole ? "W" : "N") + JSON.stringify(song)); if (undoStack.length > 120) undoStack.shift(); redoStack.length = 0; edits++; }
 function persist() { try { localStorage.setItem("onpu-kobo-song", JSON.stringify(song)); } catch (e) { /* storage unavailable */ } }
 function changed() { persist(); render(); syncTools(); }
 
@@ -1726,6 +1743,9 @@ function syncTools() {
   $("t-desel").disabled = !has;
   $("t-del").disabled = !song.notes.length;
   $("t-undo").disabled = !undoStack.length;
+  $("t-redo").disabled = !redoStack.length;
+  $("t-loop").setAttribute("aria-pressed", String(state.loop)); $("loop-nf").hidden = !state.loop;
+  $("s-scale").value = song.scale || "";
   $("title").value = song.title; $("composer").value = song.composer;
   $("tempo").value = song.tempo; $("tempo-v").textContent = "♩=" + song.tempo;
   $("beats").value = song.beats; $("inst").value = song.inst;
@@ -1774,7 +1794,9 @@ $("t-flat").onclick = () => editSel(n => { n.a = n.a === -1 ? 0 : -1; });
 $("t-nat").onclick = () => editSel(n => { n.a = n.a === 2 ? 0 : 2; });
 function movePitch(d) {
   const n = selNote(); if (!n || n.rest) return;
-  const s = mode === "easy" ? Math.min(9, Math.max(-2, n.s + d)) : Math.min(MAX_STEP, Math.max(MIN_STEP, n.s + d)); if (s === n.s) return;
+  const lo = mode === "easy" ? -2 : MIN_STEP, hi = mode === "easy" ? 9 : MAX_STEP;
+  let s = n.s + d; while (s >= lo && s <= hi && !inScale(s)) s += d; // skip the notes outside つかう音
+  s = Math.min(hi, Math.max(lo, s)); if (s === n.s || !inScale(s)) return;
   snapshot(); n.s = s; preview(n); changed();
 }
 $("t-up").onclick = () => movePitch(1);
@@ -1789,14 +1811,85 @@ function del() {
 }
 $("t-del").onclick = del;
 $("t-desel").onclick = () => { state.sel = -1; syncTools(); render(); };
-const KEEP_ON_UNDO = ["tempo", "inst", "band", "title", "composer", "lytext"]; // settings are not undo steps
-function undo() {
-  if (!undoStack.length) return;
+
+// ---------- measures: copy, paste, もういちど (on the staff being edited) ----------
+let clip = null; // { m0, m1, beats, notes, at }
+function measureNotes(m0, m1) {
+  const gs = measureGroups(), out = [];
+  for (let m = m0; m <= m1; m++) (gs[m] || []).forEach(i => { const n = JSON.parse(JSON.stringify(song.notes[i])); delete n.ly; out.push(n); });
+  const len = out.reduce((t, n) => t + beatsOf(n), 0), B = song.beats, used = len - Math.floor(len / B + EPS) * B;
+  if (used > EPS && B - used > EPS) out.push(...restsFor(B - used)); // the last, unfinished measure is copied as a whole one
+  return out;
+}
+const clipMeasure = () => (state.sel >= 0 ? measureOf(state.sel) : lastMeasure());
+function copyMeasures() {
+  if (!song.notes.length) { toast("先に音符を置いてください"); return; }
+  const m = clipMeasure();
+  let m0 = m, m1 = m;
+  // pressing again on the next (or previous) measure, with no edit in between, widens the copy (up to 8 measures)
+  if (clip && clip.at === edits && clip.part === curPart() && clip.beats === song.beats) {
+    if (m === clip.m1 + 1 && m - clip.m0 < 8) m0 = clip.m0;
+    else if (m === clip.m0 - 1 && clip.m1 - m < 8) m1 = clip.m1;
+  }
+  clip = { m0, m1, part: curPart(), beats: song.beats, notes: measureNotes(m0, m1), at: edits };
+  toast(m0 === m1 ? `${m0 + 1}小節目をコピーしました。となりの小節を選んで続けて押すと、コピーが広がります` : `${m0 + 1}〜${m1 + 1}小節目（${m1 - m0 + 1}小節）をコピーしました`);
+}
+// replace = put the measures over the selected note's measure(s); otherwise add them after the last measure
+function putMeasures(notes, replace) {
+  const B = song.beats, count = Math.round(notes.reduce((t, n) => t + beatsOf(n), 0) / B);
+  snapshot();
+  const fresh = notes.map(n => JSON.parse(JSON.stringify(n)));
+  if (replace && state.sel >= 0) {
+    const m = measureOf(state.sel), idx = measureGroups().slice(m, m + count).flat();
+    song.notes.splice(idx[0], idx.length, ...fresh);
+    state.sel = idx[0]; changed();
+    toast(`${m + 1}小節目から${count}小節を、おきかえました（「戻す」で元に戻せます）`);
+  } else {
+    const { total } = starts(), used = total - Math.floor(total / B + EPS) * B;
+    if (used > EPS && B - used > EPS) song.notes.push(...restsFor(B - used));
+    const m = Math.round(starts().total / B);
+    song.notes.push(...fresh);
+    state.sel = -1; changed(); scrollToEnd();
+    toast(`${m + 1}小節目に つけたしました`);
+  }
+}
+$("m-copy").onclick = copyMeasures;
+$("m-paste").onclick = () => {
+  if (!clip) { toast("先に、コピーしたい小節の音符を選んで「小節をコピー」を押してください"); return; }
+  if (clip.beats !== song.beats) { toast("拍子がちがうので、はりつけられません"); return; }
+  putMeasures(clip.notes, true);
+};
+$("m-again").onclick = () => {
+  if (!song.notes.length) { toast("先に音符を置いてください"); return; }
+  putMeasures(measureNotes(clipMeasure(), clipMeasure()), false);
+};
+
+// ---------- つかう音 (scale): only the scale's letters can be placed ----------
+const inScale = st => { const sc = SCALES[song.scale]; return !sc || sc.includes(((st % 7) + 7) % 7); };
+// the nearest step of the scale inside lo..hi (on a tie the higher one)
+function snapStep(st, lo, hi) {
+  for (let d = 0; d <= 3; d++) for (const c of d ? [st + d, st - d] : [st]) if (c >= lo && c <= hi && inScale(c)) return c;
+  return st;
+}
+$("s-scale").onchange = e => {
+  song.scale = e.target.value; persist();
+  const o = e.target.selectedOptions[0];
+  if (song.scale) toast(`「${o.textContent}」の音だけを置けます。五線をタップすると、いちばん近い音になります` + (song.key ? "（調号の♯・♭はそのままつきます）" : ""));
+  else toast("すべての音を置けます");
+};
+const KEEP_ON_UNDO = ["tempo", "inst", "band", "title", "composer", "lytext", "scale"]; // settings are not undo steps
+// undo and redo move one step between the two stacks; the song left behind is kept with the same kind of step ("W" / "N")
+function travel(from, to) {
+  if (!from.length) return;
   stopPlay(); // the playback was scheduled from the song being replaced
-  const raw = undoStack.pop(), old = JSON.parse(raw.slice(1));
+  const raw = from.pop(), old = JSON.parse(raw.slice(1));
+  to.push(raw[0] + JSON.stringify(song));
   if (raw[0] !== "W") KEEP_ON_UNDO.forEach(k => { if (k in song && !(k === "tempo" && old.tword !== song.tword)) old[k] = song[k]; });
-  song = adopt(old); if (!song.grand) state.part = 0; state.sel = Math.min(state.sel, song.notes.length - 1); changed(); }
+  song = adopt(old); if (!song.grand) state.part = 0; state.sel = Math.min(state.sel, song.notes.length - 1); edits++; changed();
+}
+const undo = () => travel(undoStack, redoStack), redo = () => travel(redoStack, undoStack);
 $("t-undo").onclick = undo;
+$("t-redo").onclick = redo;
 $("t-names").addEventListener("input", e => { state.names = e.target.checked; try { localStorage.setItem("onpu-kobo-names", state.names ? "1" : "0"); } catch (err) { /* storage unavailable */ } syncTools(); render(); });
 $("title").oninput = e => { song.title = e.target.value; persist(); };
 $("composer").oninput = e => { song.composer = e.target.value; persist(); };
@@ -2026,7 +2119,8 @@ function hit(ev, forcePart) {
   if (forcePart !== undefined) part = forcePart;
   else if (s.v.length > 1) part = y < (s.v[0].yb + s.v[1].y0) / 2 ? 0 : 1;
   const v = s.v[part];
-  const raw = Math.round((v.yb - y) / (g / 2)) + v.b0, step = mode === "easy" ? Math.min(9, Math.max(-2, raw)) : Math.min(v.b0 + 12, Math.max(v.b0 - 4, raw));
+  const raw = Math.round((v.yb - y) / (g / 2)) + v.b0, lo = mode === "easy" ? -2 : v.b0 - 4, hi = mode === "easy" ? 9 : v.b0 + 12;
+  const step = snapStep(Math.min(hi, Math.max(lo, raw)), lo, hi);
   const it = L.items.find(t => t.sys === si && t.part === part && Math.abs(t.x - x) < Math.max(1.1 * g, 14));
   return { x, y, sys: si, part, step, raw, item: it || null };
 }
@@ -2115,7 +2209,8 @@ function scrollToEnd() {
 document.addEventListener("keydown", ev => {
   if (ev.target.matches("input, select")) return;
   if (document.querySelector(".modal:not([hidden])")) return; // no shortcuts behind an open dialog
-  if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "z") { ev.preventDefault(); undo(); return; }
+  if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "z") { ev.preventDefault(); if (ev.shiftKey) redo(); else undo(); return; }
+  if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "y") { ev.preventDefault(); redo(); return; }
   if (ev.key === " ") { ev.preventDefault(); togglePlay(); return; }
   if (ev.key === "Delete" || ev.key === "Backspace") { ev.preventDefault(); del(); return; }
   if (ev.key === "Escape") { state.sel = -1; syncTools(); render(); return; }
@@ -2400,9 +2495,9 @@ function accMeasure(m, marks, band) {
   return ev;
 }
 // notes of the staff being edited, as timed events. abs: every staff shares one absolute clock (大譜表)
-function buildPart(sb, abs) {
+function buildPart(sb, abs, range) {
   const B = song.beats, spq = 60 / song.tempo, an = analyze(), vols = volumes(), gs = measureGroups(), st = starts();
-  const ord = playOrder(Math.floor(sb / B + EPS)), events = [], mstart = [];
+  const ord = range || playOrder(Math.floor(sb / B + EPS)), events = [], mstart = [];
   const off0 = ord.length ? sb - ord[0] * B : 0;
   const seq = [], seqK = [];
   ord.forEach((m, k) => (gs[m] || []).forEach(i => { if (!(k === 0 && st.list[i] < sb - EPS)) { seq.push(i); seqK.push(k); } }));
@@ -2433,11 +2528,12 @@ function buildPart(sb, abs) {
   if (abs) ord.forEach((m, k) => { mstart[k] = (k * B - off0) * spq; });
   return { events, ord, mstart, t, off0 };
 }
-function buildPlan(sb) {
+// range: the measures to play in order (くり返し再生), instead of the whole song from sb
+function buildPlan(sb, range) {
   const ps = visParts(), abs = ps.length > 1, spq = 60 / song.tempo;
-  const res = ps.map(p => withPart(p, () => buildPart(sb, abs)));
+  const res = ps.map(p => withPart(p, () => buildPart(sb, abs, range)));
   const base = res[0], events = res.flatMap(r => r.events);
-  if (!events.length) return { events: [], acc: [], end: 0 };
+  if (!events.length) return { events: [], acc: [], end: 0, span: 0 };
   // accompaniment follows the same measure order (repeats included)
   const acc = [], band = song.band, marks = [];
   ps.forEach(p => withPart(p, () => { const st = starts(); song.notes.forEach((n, i) => { if (n.ch) marks.push({ t: st.list[i], ch: n.ch }); }); }));
@@ -2453,10 +2549,12 @@ function buildPlan(sb) {
       acc.push(ae); end = Math.max(end, te + ae.d);
     });
   });
-  return { events, acc, end };
+  // one pass for くり返し再生: whole measures (a fermata may make the notes longer)
+  const span = Math.max(...res.map(r => r.t), (base.ord.length * song.beats - base.off0) * spq);
+  return { events, acc, end, span };
 }
-function schedule(a, out, sb, t0) {
-  const plan = buildPlan(sb), times = [], band = song.band, tg = {};
+function schedule(a, out, sb, t0, range) {
+  const plan = buildPlan(sb, range), times = [], band = song.band, tg = {};
   for (const k of ["mel", "ch", "bs", "dr", "sing"]) { const gn = a.createGain(); gn.gain.value = band[k].vol; gn.connect(out); tg[k] = gn; }
   plan.events.forEach(e => {
     e.parts.forEach(p => times.push({ i: p.i, part: e.part, t: t0 + p.t, d: p.d }));
@@ -2486,7 +2584,7 @@ function schedule(a, out, sb, t0) {
     else if (e.tr === "bs") voice(a, tg.bs, t, freqOf(e.mid), Math.max(0.15, e.d), "bass", 0.95);
     else drum(a, tg.dr, t, e.kind);
   });
-  return { times, end: t0 + plan.end, tg };
+  return { times, end: t0 + plan.end, span: plan.span, tg };
 }
 function limiter(a, node) { const c = a.createDynamicsCompressor(); node.connect(c); c.connect(a.destination); }
 function togglePlay() {
@@ -2501,18 +2599,35 @@ function replay() {
   const sb = cur !== undefined ? cur : state.playing.sb;
   stopPlay(); playFrom(sb);
 }
+// くり返し再生: the selected note's measure and the next ones (loop-n), or the whole song when nothing is selected
+function loopRange() {
+  if (state.sel < 0) return null;
+  const m0 = measureOf(state.sel), n = mode === "easy" ? 2 : +$("loop-n").value, m1 = Math.min(totalMeasures(), m0 + n), out = [];
+  for (let m = m0; m < m1; m++) out.push(m);
+  return out;
+}
 function playFrom(sb) {
   if (!hasNotes()) { toast("まず五線をタップして音符を置きましょう"); return; }
   const a = ac(); const out = a.createGain(); out.gain.value = 0.6; limiter(a, out);
   const t0 = a.currentTime + 0.08;
-  const sch = schedule(a, out, sb, t0);
-  const playing = { out, sch, sb };
+  const loop = state.loop, range = loop ? loopRange() : undefined;
+  if (loop) sb = range ? range[0] * song.beats : 0; // a loop always starts at a barline
+  const sch = schedule(a, out, sb, t0, range || undefined);
+  if (loop && !(sch.span > 0.05)) return toast("くり返す小節に音符がありません");
+  const playing = { out, sch, sb, next: t0 + sch.span };
   state.playing = playing;
   setLabel($("play"), "■ 停止"); $("play").classList.add("playing");
   const tick = () => {
     if (state.playing !== playing) return; // stopped, or replaced by replay()
     const now = a.currentTime;
-    if (now > sch.end + 0.3) return stopPlay();
+    if (loop) {
+      // schedule the next pass a little before this one ends, and forget the notes already played
+      if (now > playing.next - 0.4) {
+        const s2 = schedule(a, out, sb, playing.next, range || undefined);
+        sch.times = sch.times.filter(e => e.t + e.d > now - 0.5).concat(s2.times);
+        playing.next += s2.span;
+      }
+    } else if (now > sch.end + 0.3) return stopPlay();
     const idxs = [0, 1].map(p => { const c = sch.times.find(e => e.part === p && now >= e.t && now < e.t + e.d); return c ? c.i : -1; });
     if (idxs.join() !== state.playIdx.join()) {
       state.playIdx = idxs; render();
@@ -2535,6 +2650,12 @@ function stopPlay() {
   render();
 }
 $("play").onclick = togglePlay;
+$("t-loop").onclick = () => {
+  state.loop = !state.loop; syncTools();
+  if (state.loop && !state.playing) toast(state.sel >= 0 ? "選んだ音符の小節から、くり返し再生します。「▶ 再生」を押してください" : "曲全体をくり返し再生します。音符を選ぶと、その小節からくり返します");
+  replay();
+};
+$("loop-n").onchange = () => replay();
 
 // ---------- files ----------
 const inFrame = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
@@ -2686,6 +2807,24 @@ function makePdf(jpgs, iw, ih) {
 
 // ---------- 学年モード（かんたん / ふつう / くわしく）と ひらがな・ふりがな ----------
 const HIRA_SRC = `音符=おんぷ
+民謡音階=みんようおんかい
+都節音階=みやこぶしおんかい
+律音階=りつおんかい
+沖縄音階=おきなわおんかい
+日本の音階=にほんのおんかい
+音階=おんかい
+小節目=しょうせつめ
+返す=かえす
+置ける=おける
+近い=ちかい
+広がります=ひろがります
+広がり=ひろがり
+続けて=つづけて
+全体=ぜんたい
+沖縄=おきなわ
+都節=みやこぶし
+律=りつ
+日本=にほん
 名前=なまえ
 消え=きえ
 合成音=ごうせいおん
@@ -3031,6 +3170,8 @@ function setMode(m, fresh) {
 function limitKeys() {
   const cur = String(song.key) + (song.minor ? "m" : "");
   document.querySelectorAll("#key option").forEach(o => { const off = mode === "normal" && o.value !== "0" && o.value !== "0m" && o.value !== cur; o.hidden = off; o.disabled = off; });
+  // かんたん: つかう音 is すべて or ドレミソラ only (a song that already uses another scale keeps it)
+  document.querySelectorAll("#s-scale option").forEach(o => { const off = mode === "easy" && !["", "yona", song.scale || ""].includes(o.value); o.hidden = off; o.disabled = off; });
 }
 $("s-hira").addEventListener("input", e => { hiraManual = e.target.checked; try { localStorage.setItem("onpu-kobo-hira", hiraManual ? "1" : "0"); } catch (err) { /* storage unavailable */ } applyText(); });
 document.querySelectorAll(".modebtn").forEach(b => { b.onclick = () => { $("mode-modal").hidden = true; setMode(b.dataset.mode); if (launching) openStart(true); }; });
@@ -3047,7 +3188,7 @@ function syncSettings() {
 }
 $("btn-set").onclick = () => { syncSettings(); $("set-modal").hidden = false; document.querySelector("#set-modal .box").scrollTop = 0; $("set-h").focus({ preventScroll: true }); };
 $("set-close").onclick = () => { $("set-modal").hidden = true; };
-const APP_VER = "1.12", APP_DATE = "2026-10-13";
+const APP_VER = "1.13", APP_DATE = "2026-10-27";
 $("about-ver").textContent = APP_VER; $("about-date").textContent = APP_DATE;
 const closeAbout = () => { $("about-modal").hidden = true; };
 $("btn-about").onclick = () => { $("about-modal").hidden = false; document.querySelector("#about-modal .box").scrollTop = 0; $("about-h").focus({ preventScroll: true }); };
